@@ -10,9 +10,7 @@ namespace SnakeGame
         static int width, height;
         short interval = 100;
         int score = -1;
-        int[,] snake = new int[2, 2] {
-                { width / 3, height / 3 },
-                { width / 3+1, height / 3 }};
+        int[,] snake;
         bool grow = true;
         ConsoleKey command;
         ConsoleKeyInfo lastKey;
@@ -25,6 +23,11 @@ namespace SnakeGame
         {
             width = _width;
             height = _height;
+
+            snake = new int[2, 2] {
+                { width / 3, height / 3 },
+                { width / 3+1, height / 3 }};
+
             Console.CursorVisible = false;
             Console.Clear();
             DrawTheBorders();
