@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -12,7 +7,7 @@ namespace SnakeGame
 {
     class Game
     {
-        static int width = 35, height = 20;
+        static int width, height;
         short interval = 100;
         int score = -1;
         int[,] snake = new int[2, 2] {
@@ -26,8 +21,10 @@ namespace SnakeGame
 
         internal Timer tmr { get; private set; }
 
-        public Game()
+        public Game(int _width, int _height)
         {
+            width = _width;
+            height = _height;
             Console.CursorVisible = false;
             Console.Clear();
             DrawTheBorders();
@@ -52,7 +49,7 @@ namespace SnakeGame
 
         void Tick(object sender, ElapsedEventArgs e)
         {
-            //basılan tuşa göre array'in son elemanına yeni konum bilgisini gir
+            //new position data in the last element of the array based on the key pressed
             switch (Command())
             {
                 case ConsoleKey.NoName:
@@ -91,14 +88,16 @@ namespace SnakeGame
             {
                 tmr.Stop();
                 Console.SetCursorPosition(width + 5, 3);
-                Console.WriteLine("Yandın. Bi' daha? (E/H)");
+                Console.WriteLine("Self-cannibalization exception.");
+                Console.SetCursorPosition(width + 5, 5);
+                Console.WriteLine("Again ? (Y / N)");
                 tmr.Dispose();
 
                 do
                     lastKey = Console.ReadKey(true);
-                while (lastKey.Key != ConsoleKey.E && lastKey.Key != ConsoleKey.H);
+                while (lastKey.Key != ConsoleKey.Y && lastKey.Key != ConsoleKey.N);
 
-                if (lastKey.Key == ConsoleKey.E)
+                if (lastKey.Key == ConsoleKey.Y)
                     Program.Run();
                 else
                     Environment.Exit(0);
@@ -112,8 +111,8 @@ namespace SnakeGame
             if (grow)
             {
                 score++;
-                Console.SetCursorPosition(width + 5, 5);
-                Console.Write("Skor: " + score);
+                Console.SetCursorPosition(width + 5, 9);
+                Console.Write("Score: " + score);
 
                 //make another prey appear at a random position
                 do

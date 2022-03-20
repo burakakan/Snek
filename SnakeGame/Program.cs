@@ -17,9 +17,13 @@ namespace SnakeGame
         internal static void Run()
         {
             //Console.SetCursorPosition(2, 2);
-            //Console.WriteLine("Genişliği gir: ");
+            //Console.WriteLine("Specify the width: ");
             //Console.ReadLine(width);
-            game = new Game();
+            //Console.SetCursorPosition(2, 2);
+            //Console.WriteLine("Specify the height: ");
+            //Console.ReadLine(height);
+
+            game = new Game(35,20);
 
             Thread.Sleep(Timeout.Infinite);
         }
